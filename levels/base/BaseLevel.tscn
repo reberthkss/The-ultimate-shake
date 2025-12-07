@@ -1,0 +1,136 @@
+[gd_scene load_steps=15 format=3 uid="uid://4eyxasw3cppy"]
+
+[ext_resource type="Script" uid="uid://bmdjsdwataobk" path="res://levels/base/base_level.gd" id="1_dk8oo"]
+[ext_resource type="Texture2D" uid="uid://crgw3utvmd66d" path="res://levels/0-200/Background_Level_0_200.png" id="2_cw80v"]
+[ext_resource type="Texture2D" uid="uid://l3aw6b16x5b3" path="res://levels/assets/images/bubble.png" id="3_vllue"]
+[ext_resource type="PackedScene" uid="uid://dcilduu2yc6tm" path="res://Player/player.tscn" id="4_3tdma"]
+[ext_resource type="PackedScene" uid="uid://4mms8vd6uv6d" path="res://end_screen/End_screen.tscn" id="5_q0jyg"]
+[ext_resource type="PackedScene" uid="uid://bbv2hq2tito6b" path="res://camera/camera.tscn" id="6_ky5n2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dk8oo"]
+size = Vector2(1695, 53)
+
+[sub_resource type="Gradient" id="Gradient_c6ubx"]
+colors = PackedColorArray(0, 0, 0, 0, 0.521569, 0.258824, 0.447059, 0.552941)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yqr66"]
+gradient = SubResource("Gradient_c6ubx")
+fill = 2
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_c1ptl"]
+offsets = PackedFloat32Array(0.0227273, 1)
+colors = PackedColorArray(0.996078, 0.94902, 0.92549, 0.176471, 0.898039, 0.854902, 0.898039, 0.509804)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7him7"]
+gradient = SubResource("Gradient_c1ptl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uhsur"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(800, 1, 1)
+gravity = Vector3(0, 100, 0)
+scale_min = 0.2
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_7him7")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d73yb"]
+size = Vector2(1702, 170)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21l0h"]
+size = Vector2(57.25, 2401)
+
+[node name="BaseLevel" type="Node2D"]
+script = ExtResource("1_dk8oo")
+
+[node name="NextLevel" type="Area2D" parent="."]
+position = Vector2(-2, -2282)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevel"]
+position = Vector2(9.5, -16.5)
+shape = SubResource("RectangleShape2D_dk8oo")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(-20, -1273)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(28, 212)
+texture = ExtResource("2_cw80v")
+
+[node name="TopFog" type="TextureRect" parent="."]
+z_index = -1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -844.0
+offset_top = -2335.0
+offset_right = 859.0
+offset_bottom = 208.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+texture = SubResource("GradientTexture2D_yqr66")
+
+[node name="TopBubbles" type="GPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(1, -2277)
+amount = 200
+texture = ExtResource("3_vllue")
+lifetime = 1.5
+visibility_rect = Rect2(-1476.61, -677.965, 2953.02, 1468.37)
+process_material = SubResource("ParticleProcessMaterial_uhsur")
+
+[node name="Scenario bubbles" type="GPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(1, -2277)
+amount = 500
+texture = ExtResource("3_vllue")
+lifetime = 363.88
+visibility_rect = Rect2(-1466.38, -677.957, 2934.37, 3300)
+process_material = SubResource("ParticleProcessMaterial_uhsur")
+
+[node name="BottomBubbles" type="GPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(1, 58)
+amount = 200
+texture = ExtResource("3_vllue")
+lifetime = 1.5
+visibility_rect = Rect2(-1476.61, -677.965, 2953.02, 1468.37)
+process_material = SubResource("ParticleProcessMaterial_uhsur")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+position = Vector2(-114, 65)
+
+[node name="Floor" type="CollisionShape2D" parent="Walls"]
+position = Vector2(131, 26)
+shape = SubResource("RectangleShape2D_d73yb")
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-714.25, -1259)
+shape = SubResource("RectangleShape2D_21l0h")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(962.625, -1246)
+shape = SubResource("RectangleShape2D_21l0h")
+
+[node name="Player" parent="." instance=ExtResource("4_3tdma")]
+position = Vector2(0, -55)
+scale = Vector2(0.3, 0.3)
+speed = 200.0
+jump_velocity = -700.0
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="EndScreen" parent="." instance=ExtResource("5_q0jyg")]
+
+[node name="Camera" parent="." node_paths=PackedStringArray("player_node") instance=ExtResource("6_ky5n2")]
+zoom = Vector2(3.5, 3.5)
+player_node = NodePath("../Player")
+
+[connection signal="body_entered" from="NextLevel" to="." method="_on_next_level_body_entered"]
+[connection signal="request_floor" from="Player" to="." method="_on_player_request_floor"]
+[connection signal="game_over" from="Camera" to="." method="_on_camera_game_over"]

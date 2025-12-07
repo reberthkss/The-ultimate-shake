@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://c11fp1e1m0wfi"]
+
+[ext_resource type="Script" uid="uid://860rk50p17xf" path="res://levels/0-200/level_0_200.gd" id="1_c6ubx"]
+[ext_resource type="PackedScene" uid="uid://4eyxasw3cppy" path="res://levels/base/BaseLevel.tscn" id="1_kkan7"]
+[ext_resource type="PackedScene" uid="uid://j5g13eca1i74" path="res://floor/floor.tscn" id="2_7him7"]
+[ext_resource type="Texture2D" uid="uid://crgw3utvmd66d" path="res://levels/0-200/Background_Level_0_200.png" id="3_pwdku"]
+
+[node name="Level0200" type="Node2D"]
+script = ExtResource("1_c6ubx")
+
+[node name="BaseLevel" parent="." instance=ExtResource("1_kkan7")]
+platform_scene = ExtResource("2_7him7")
+background = ExtResource("3_pwdku")
+
+[connection signal="on_next_level" from="BaseLevel" to="." method="_on_base_level_on_next_level"]

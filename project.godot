@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="The Ultimate Shake"
-run/main_scene="uid://dmbm0x7v15tk2"
+run/main_scene="uid://dij5ywxyfhojb"
 config/features=PackedStringArray("4.4", "Mobile")
 
 [display]

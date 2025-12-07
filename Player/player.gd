@@ -2,18 +2,24 @@ extends CharacterBody2D
 
 # --- Variáveis de Movimento ---
 # Velocidade de movimento para os lados
-@export var speed = 400.0
+@export var speed = 200.0
 # Força do pulo automático
-@export var jump_velocity = -1800.0
+@export var jump_velocity = -700.0
 
 @onready var shape_2d = $Sprite2D
 
+var screen_size: Vector2
+var last_platform_y: float = 0.0 
+var y_spawn_offset: float = 20.0 
+var last_platform: Vector2 = Vector2(0,0)
+var LIMIT_LEFT = -840
+var LIMIT_RIGHT = 840
+
 var is_on_base_platform = true
 
-signal request_floor()
+signal request_floor(position: Vector2)
 
-# Pega o valor da gravidade das configurações do projeto
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = 500
 
 func update_texture(sprite_2d, texture_path):
 	var texture = load(texture_path)
@@ -33,7 +39,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_pressed() and not event.echo:
 			if event.keycode == KEY_W and is_on_base_platform:
 				velocity.y = jump_velocity
-				request_floor.emit()
+				request_floor.emit(position)
 				is_on_base_platform = false
 				
 			if is_on_base_platform:
@@ -66,7 +72,14 @@ func _physics_process(delta):
 	# Esta é a mecânica principal do nosso jogo estilo Doodle Jump!
 	if is_on_floor():
 		velocity.y += jump_velocity
-		request_floor.emit()
+		
+		var colidedFloor = get_last_slide_collision()
+		var obj = colidedFloor.get_collider()
+		
+		if obj.has_method("emit_sound"):
+			obj.emit_sound()
+			
+		request_floor.emit(position)
 		
 
 	# --- 4. Animação (Básico) ---

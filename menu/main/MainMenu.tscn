@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://dij5ywxyfhojb"]
+
+[ext_resource type="Script" uid="uid://prfb07jpqe2b" path="res://menu/main/main_menu.gd" id="1_xpnwh"]
+[ext_resource type="Texture2D" uid="uid://cdaucd42qiicx" path="res://menu/main/Background.png" id="2_73r84"]
+[ext_resource type="Texture2D" uid="uid://c6sf0h2eqserc" path="res://menu/main/Play.png" id="3_1cuxt"]
+[ext_resource type="Texture2D" uid="uid://h6mv4ldarcvq" path="res://menu/main/settings.png" id="4_7iy28"]
+[ext_resource type="Texture2D" uid="uid://bsiy2ifsa2nu" path="res://menu/main/ranking.png" id="5_pglin"]
+[ext_resource type="AudioStream" uid="uid://bjcxp1tynrfs6" path="res://menu/main/audio/main_menu.wav" id="6_73r84"]
+[ext_resource type="AudioStream" uid="uid://qxpvo3clx4wj" path="res://menu/main/audio/bubble_sfx.mp3" id="8_vk62t"]
+
+[sub_resource type="Animation" id="Animation_73r84"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xpnwh"]
+resource_name = "pulse"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(2, 2, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1cuxt"]
+_data = {
+&"RESET": SubResource("Animation_73r84"),
+&"pulse": SubResource("Animation_xpnwh")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xpnwh")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_73r84")
+expand_mode = 1
+
+[node name="PlayButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -289.0
+offset_top = -432.0
+offset_right = 289.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(289, 216)
+texture_normal = ExtResource("3_1cuxt")
+
+[node name="Settings" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -527.0
+offset_bottom = 474.0
+grow_horizontal = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(527, 0)
+texture_normal = ExtResource("4_7iy28")
+
+[node name="Ranking" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -504.0
+offset_bottom = 495.0
+grow_horizontal = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(490, 495)
+texture_normal = ExtResource("5_pglin")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1cuxt")
+}
+autoplay = "pulse"
+
+[node name="BackgroundSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_73r84")
+volume_db = -15.0
+autoplay = true
+
+[node name="ButtonsSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_vk62t")
+volume_db = -10.0
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Ranking" to="." method="_on_ranking_pressed"]
