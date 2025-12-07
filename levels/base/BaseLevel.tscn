@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://4eyxasw3cppy"]
+[gd_scene load_steps=16 format=3 uid="uid://4eyxasw3cppy"]
 
 [ext_resource type="Script" uid="uid://bmdjsdwataobk" path="res://levels/base/base_level.gd" id="1_dk8oo"]
 [ext_resource type="Texture2D" uid="uid://crgw3utvmd66d" path="res://levels/0-200/Background_Level_0_200.png" id="2_cw80v"]
@@ -6,6 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dcilduu2yc6tm" path="res://Player/player.tscn" id="4_3tdma"]
 [ext_resource type="PackedScene" uid="uid://4mms8vd6uv6d" path="res://end_screen/End_screen.tscn" id="5_q0jyg"]
 [ext_resource type="PackedScene" uid="uid://bbv2hq2tito6b" path="res://camera/camera.tscn" id="6_ky5n2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dk8oo"]
+font_size = 32
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dk8oo"]
 size = Vector2(1695, 53)
@@ -42,6 +47,24 @@ size = Vector2(57.25, 2401)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_dk8oo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="WelcomeMessage" type="Label" parent="CanvasLayer"]
+top_level = true
+anchors_preset = -1
+anchor_top = -0.043
+anchor_bottom = -0.043
+offset_left = -166.0
+offset_top = -43.44
+offset_right = 178.0
+offset_bottom = 44.56
+grow_horizontal = 2
+grow_vertical = 0
+text = "Level 0-200"
+label_settings = SubResource("LabelSettings_dk8oo")
+horizontal_alignment = 1
 
 [node name="NextLevel" type="Area2D" parent="."]
 position = Vector2(-2, -2282)

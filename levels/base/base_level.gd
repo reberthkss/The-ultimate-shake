@@ -1,10 +1,12 @@
 extends Node2D
 
+@export_category("Level configuration")
 @export var platform_scene: PackedScene
-
 @export var background: Texture2D
+@export_multiline var welcome_message: String = "Prepare-se!"
 
 @onready var player = $Player
+@onready var welcome_label = $CanvasLayer/WelcomeMessage
 
 signal on_next_level()
 
@@ -19,6 +21,8 @@ func _ready():
 	player.scale = Vector2(0.2, 0.2)
 	$BottomBubbles.visible = false
 	$ParallaxBackground/ParallaxLayer/Sprite2D.texture = background
+	welcome_label.text = welcome_message
+	animate_welcome()
 
 func _process(delta):
 		
@@ -63,3 +67,15 @@ func _on_camera_game_over() -> void:
 
 func show_bottom_bubbles():
 	$BottomBubbles.visible = true
+	
+func animate_welcome():
+	welcome_label.visible = true
+	welcome_label.modulate.a = 1.0
+	
+	var tween = create_tween()
+	
+	tween.tween_interval(2.0)
+	
+	tween.tween_property(welcome_label, "modulate:a", 0.0, 1.0)
+	
+	tween.tween_callback(welcome_label.hide)

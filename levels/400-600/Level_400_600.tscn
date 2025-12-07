@@ -11,5 +11,6 @@ script = ExtResource("1_43b5w")
 [node name="BaseLevel" parent="." instance=ExtResource("2_w1hkn")]
 platform_scene = ExtResource("2_341uc")
 background = ExtResource("1_m5ix3")
+welcome_message = "Level 400 to 600 ml"
 
 [connection signal="on_next_level" from="BaseLevel" to="." method="_on_base_level_on_next_level"]
