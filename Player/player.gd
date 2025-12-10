@@ -1,11 +1,7 @@
 extends CharacterBody2D
 
-# --- Variáveis de Movimento ---
-# Velocidade de movimento para os lados
 @export var speed = 200.0
-# Força do pulo automático
 @export var jump_velocity = -700.0
-
 @onready var shape_2d = $Sprite2D
 
 var screen_size: Vector2
@@ -59,8 +55,6 @@ func _physics_process(delta):
 	if is_on_floor() && is_on_base_platform:
 		return
 		
-	# --- 1. Adicionar Gravidade ---
-	# Se o personagem não estiver no chão, aplica a gravidade.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		if (velocity.y < 0):
@@ -68,11 +62,8 @@ func _physics_process(delta):
 		else:
 			update_texture($Sprite2D, "res://Player/player_on_air_down.png")
 
-	# --- 2. Pulo Automático ---
-	# Se o personagem está no chão, ele pula automaticamente.
-	# Esta é a mecânica principal do nosso jogo estilo Doodle Jump!
 	if is_on_floor():
-		velocity.y += jump_velocity
+		var new_velocity = Vector2(0, jump_velocity)
 		
 		var colidedFloor = get_last_slide_collision()
 		var obj = colidedFloor.get_collider()
@@ -88,26 +79,27 @@ func _physics_process(delta):
 				hit_strawberry.emit()
 				
 			if obj.get_type() == Global.FloorType.ICE:
+				new_velocity.x += 100
+				new_velocity.y = jump_velocity/1.2
 				hit_ice.emit()
 			
-			if obj.get_type() == Global.FloorType.ICE_BREAK:
-				hit_ice_break.emit()
-			
 			if obj.get_type() == Global.FloorType.MIRTILO:
+				new_velocity.x += 100
 				hit_mirtilo.emit()
 			
+			if obj.get_type() == Global.FloorType.ICE_BREAK:
+				# Careful: obj is null after free
+				obj.free()
+				hit_ice_break.emit()
+			
+		velocity += new_velocity
 		request_floor.emit(position)
 
-	# --- 4. Animação (Básico) ---
-	# Vira o sprite para a direção que o personagem está se movendo
 	if velocity.x < 0:
 		$Sprite2D.flip_h = true
 	elif velocity.x > 0:
 		$Sprite2D.flip_h = false
 
-	# --- 5. Mover o Personagem ---
-	# A função que efetivamente move o nosso corpo e detecta colisões
-	
 func get_feet_position_y():
 	var sprite_2d_height =  $Sprite2D.get_rect().size.y
 	return $CollisionShape2D.position[1] + sprite_2d_height/2

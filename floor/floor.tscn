@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://lof4gimdides" path="res://floor/floor.gd" id="1_wld48"]
 [ext_resource type="AudioStream" uid="uid://d1eisytdefyv6" path="res://floor/sfx/banana_pop.mp3" id="3_nr51y"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wsjq"]
-size = Vector2(702.858, 365.715)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr51y"]
+size = Vector2(817.145, 354.287)
 
 [node name="Platform" type="CharacterBody2D"]
 scale = Vector2(0.35, 0.35)
@@ -17,7 +17,7 @@ texture = ExtResource("1_1wsjq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-5.7143, -11.4286)
 scale = Vector2(0.999998, 0.999998)
-shape = SubResource("RectangleShape2D_1wsjq")
+shape = SubResource("RectangleShape2D_nr51y")
 one_way_collision = true
 one_way_collision_margin = 39.0
 debug_color = Color(3.27289e-06, 0.589272, 0.757915, 0.42)
