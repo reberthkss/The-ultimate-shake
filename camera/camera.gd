@@ -15,7 +15,10 @@ func _process(delta: float) -> void:
 
 func check_gameover():
 	var screen_height = get_viewport_rect().size.y
+	var player_global_position = player_node.global_position.y
+	var camera_global_position = global_position.y
+	var screen_offset = (screen_height/4) * 1.1
 	
-	if player_node.global_position.y > global_position.y + (screen_height/2) * 1.1:
+	if  player_global_position > global_position.y + screen_offset:
 		game_over.emit()
 	

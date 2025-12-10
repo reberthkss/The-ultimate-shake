@@ -18,6 +18,11 @@ var LIMIT_RIGHT = 840
 var is_on_base_platform = true
 
 signal request_floor(position: Vector2)
+signal hit_banana()
+signal hit_strawberry()
+signal hit_ice()
+signal hit_ice_break()
+signal hit_mirtilo()
 
 var gravity = 500
 
@@ -31,11 +36,7 @@ func _input(event: InputEvent) -> void:
 	# var direction = Input.get_accelerometer().x * 2 # Multiplicamos por 2 para mais sensibilidade
 	
 	if event is InputEventKey:
-		## TODO(Reberth): Fix the movement freeze
-		#if not event.is_pressed() and not event.echo:
-			#if event.keycode == KEY_A or event.keycode == KEY_D:
-				#velocity.x = move_toward(velocity.x, 0, speed)
-				#
+		
 		if event.is_pressed() and not event.echo:
 			if event.keycode == KEY_W and is_on_base_platform:
 				velocity.y = jump_velocity
@@ -78,9 +79,24 @@ func _physics_process(delta):
 		
 		if obj.has_method("emit_sound"):
 			obj.emit_sound()
+		
+		if obj.has_method("get_type"):			
+			if obj.get_type() == Global.FloorType.BANANA:
+				hit_banana.emit()
+			
+			if obj.get_type() == Global.FloorType.STRAW_BERRY:
+				hit_strawberry.emit()
+				
+			if obj.get_type() == Global.FloorType.ICE:
+				hit_ice.emit()
+			
+			if obj.get_type() == Global.FloorType.ICE_BREAK:
+				hit_ice_break.emit()
+			
+			if obj.get_type() == Global.FloorType.MIRTILO:
+				hit_mirtilo.emit()
 			
 		request_floor.emit(position)
-		
 
 	# --- 4. Animação (Básico) ---
 	# Vira o sprite para a direção que o personagem está se movendo
@@ -92,7 +108,6 @@ func _physics_process(delta):
 	# --- 5. Mover o Personagem ---
 	# A função que efetivamente move o nosso corpo e detecta colisões
 	
-
 func get_feet_position_y():
 	var sprite_2d_height =  $Sprite2D.get_rect().size.y
 	return $CollisionShape2D.position[1] + sprite_2d_height/2

@@ -3,6 +3,10 @@ extends Node2D
 @export_category("Level configuration")
 @export var platform_scene: PackedScene
 @export var background: Texture2D
+@export var banana_enabled: bool = true
+@export var straw_berry_enabled: bool = false
+@export var ice_enabled: bool = false
+@export var mirtilo_enabled: bool = false
 @export_multiline var welcome_message: String = "Prepare-se!"
 
 @onready var player = $Player
@@ -34,7 +38,7 @@ func _on_player_request_floor(position: Vector2) -> void:
 	
 	if last_platform.y != 0 and  last_platform.y < position.y	:
 		return
-		
+	
 	var direction = 1 if randi_range(-1, 1) > 0 else -1
 	var next_platform_x = last_platform.x + (150 * direction)
 	var next_platform_y = last_platform.y - 100
@@ -48,10 +52,26 @@ func _on_player_request_floor(position: Vector2) -> void:
 	var spawn_position = Vector2(next_platform_x, next_platform_y)
 	var new_platform = platform_scene.instantiate()
 	
-	new_platform.type = "banana"
+	var type: int = -1
 	
-	new_platform.scale = Vector2(0.1, 0.1)
-
+	while type == -1:
+		var floor_type = Global.get_randomized_floor_type()
+		
+		if floor_type == Global.FloorType.BANANA && banana_enabled:
+			type = floor_type
+		
+		if floor_type == Global.FloorType.STRAW_BERRY && straw_berry_enabled:
+			type = floor_type
+			
+		if floor_type == Global.FloorType.ICE && ice_enabled:
+			type = floor_type
+		
+		if floor_type == Global.FloorType.MIRTILO && mirtilo_enabled:
+			type = floor_type
+			
+	
+	new_platform.set_type(type)
+		
 	new_platform.position = spawn_position
 	
 	$Platforms.add_child(new_platform)
