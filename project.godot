@@ -22,9 +22,26 @@ Global="*res://Global.gd"
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
+window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"
+window/handheld/orientation=1
+
+[input_devices]
+
+sensors/enable_accelerometer=true
+sensors/enable_gravity=true
+sensors/enable_gyroscope=true
+sensors/enable_magnetometer=true
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="ChocolateEnemies"
+2d_physics/layer_4="Sugar"
 
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

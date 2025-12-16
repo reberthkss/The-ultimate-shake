@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg8fowxepoqrn"]
+
+[ext_resource type="Script" uid="uid://b3f7lql0fhnwc" path="res://levels/enemies/cholate/chocolate_particles.gd" id="1_nww8a"]
+[ext_resource type="PackedScene" uid="uid://da8as3ba6kqgu" path="res://levels/enemies/cholate/chocolate.tscn" id="2_vuu1e"]
+
+[node name="ChocolateParticles" type="Node2D"]
+script = ExtResource("1_nww8a")
+chocolate_scene = ExtResource("2_vuu1e")

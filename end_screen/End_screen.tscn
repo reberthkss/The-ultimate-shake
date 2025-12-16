@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://4mms8vd6uv6d"]
+[gd_scene load_steps=6 format=3 uid="uid://4mms8vd6uv6d"]
 
 [ext_resource type="Script" uid="uid://c3miy7b6po0yg" path="res://end_screen/end_screen.gd" id="1_u7e0x"]
 [ext_resource type="Texture2D" uid="uid://dd3d82rwbkadj" path="res://end_screen/exit.png" id="2_d36jh"]
+[ext_resource type="Texture2D" uid="uid://cply1wt00pg03" path="res://end_screen/try_again.png" id="2_sns15"]
 
 [sub_resource type="FontFile" id="FontFile_sns15"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -51,9 +55,15 @@ layout_mode = 2
 text = "Voce perdeu!"
 label_settings = SubResource("LabelSettings_ytvkd")
 
+[node name="try_again" type="TextureButton" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_sns15")
+
 [node name="Exit" type="TextureButton" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture_normal = ExtResource("2_d36jh")
 
+[connection signal="pressed" from="CenterContainer/VBoxContainer/try_again" to="." method="_on_try_again_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -1,20 +1,79 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcilduu2yc6tm"]
+[gd_scene load_steps=10 format=3 uid="uid://dcilduu2yc6tm"]
 
 [ext_resource type="Texture2D" uid="uid://bu3k6hci5au2w" path="res://Player/player_idle.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://nv0rxgejhft5" path="res://Player/player.gd" id="1_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://f5g8gh3eslna" path="res://Player/player_on_air_up_hitting_sugar.png" id="3_vtle1"]
+[ext_resource type="Texture2D" uid="uid://bxfdpaih5a4i6" path="res://Player/player_on_air_down.png" id="4_od3ui"]
+[ext_resource type="Texture2D" uid="uid://bydpfv4j4j11k" path="res://Player/player_on_air_up.png" id="5_00tjw"]
+[ext_resource type="Texture2D" uid="uid://vo4oj82dwisy" path="res://Player/player_on_air_up_with_sugar.png" id="6_x3vf3"]
+[ext_resource type="Texture2D" uid="uid://mipdutarc75w" path="res://Player/player_on_air_down_with_sugar.png" id="7_od3ui"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_apopc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_x3vf3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vtle1")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4flbx")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_od3ui")
+}],
+"loop": false,
+"name": &"normal_down",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_00tjw")
+}],
+"loop": false,
+"name": &"normal_up",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_od3ui")
+}],
+"loop": false,
+"name": &"sugar_down",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_x3vf3")
+}],
+"loop": false,
+"name": &"sugar_up",
+"speed": 30.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_btcbx"]
 size = Vector2(429, 773)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
 script = ExtResource("1_4ntmi")
-speed = null
-jump_velocity = null
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(13, 5.50003)
 scale = Vector2(1.02539, 0.989258)
-texture = ExtResource("1_4flbx")
+sprite_frames = SubResource("SpriteFrames_apopc")
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_btcbx")

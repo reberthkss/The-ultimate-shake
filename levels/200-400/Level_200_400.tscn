@@ -11,6 +11,8 @@ script = ExtResource("1_tgvla")
 [node name="BaseLevel" parent="." instance=ExtResource("2_tgvla")]
 platform_scene = ExtResource("2_fi6h3")
 background = ExtResource("1_bxk06")
+sugar_enabled = true
 welcome_message = "Level 200 to 400ml"
 
 [connection signal="on_next_level" from="BaseLevel" to="." method="_on_base_level_on_next_level"]
+[connection signal="on_try_again" from="BaseLevel" to="." method="_on_base_level_on_try_again"]

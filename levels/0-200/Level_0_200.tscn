@@ -11,9 +11,8 @@ script = ExtResource("1_c6ubx")
 [node name="BaseLevel" parent="." instance=ExtResource("1_kkan7")]
 platform_scene = ExtResource("2_7him7")
 background = ExtResource("3_pwdku")
-straw_berry_enabled = true
-ice_enabled = true
-mirtilo_enabled = true
+sugar_enabled = true
 welcome_message = "Level 0 to 200 ml"
 
 [connection signal="on_next_level" from="BaseLevel" to="." method="_on_base_level_on_next_level"]
+[connection signal="on_try_again" from="BaseLevel" to="." method="_on_base_level_on_try_again"]

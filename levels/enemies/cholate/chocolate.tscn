@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://da8as3ba6kqgu"]
+
+[ext_resource type="Script" uid="uid://cbdshc3caqxc1" path="res://levels/enemies/cholate/chocolate.gd" id="1_dchh4"]
+[ext_resource type="Texture2D" uid="uid://vt63xjo027rl" path="res://levels/enemies/cholate/chocolate.png" id="2_b04p3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_scdml"]
+radius = 89.0
+height = 360.0
+
+[node name="Chocolate" type="Area2D"]
+collision_layer = 7
+collision_mask = 2
+script = ExtResource("1_dchh4")
+
+[node name="image" type="Sprite2D" parent="."]
+texture = ExtResource("2_b04p3")
+
+[node name="shape" type="CollisionShape2D" parent="."]
+position = Vector2(-18, -24)
+shape = SubResource("CapsuleShape2D_scdml")

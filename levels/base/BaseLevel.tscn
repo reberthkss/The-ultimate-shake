@@ -1,11 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://4eyxasw3cppy"]
+[gd_scene load_steps=18 format=3 uid="uid://4eyxasw3cppy"]
 
 [ext_resource type="Script" uid="uid://bmdjsdwataobk" path="res://levels/base/base_level.gd" id="1_dk8oo"]
 [ext_resource type="Texture2D" uid="uid://crgw3utvmd66d" path="res://levels/0-200/Background_Level_0_200.png" id="2_cw80v"]
+[ext_resource type="PackedScene" uid="uid://cg8fowxepoqrn" path="res://levels/enemies/cholate/ChocolateParticles.tscn" id="3_cw80v"]
 [ext_resource type="Texture2D" uid="uid://l3aw6b16x5b3" path="res://levels/assets/images/bubble.png" id="3_vllue"]
 [ext_resource type="PackedScene" uid="uid://dcilduu2yc6tm" path="res://Player/player.tscn" id="4_3tdma"]
 [ext_resource type="PackedScene" uid="uid://4mms8vd6uv6d" path="res://end_screen/End_screen.tscn" id="5_q0jyg"]
 [ext_resource type="PackedScene" uid="uid://bbv2hq2tito6b" path="res://camera/camera.tscn" id="6_ky5n2"]
+[ext_resource type="PackedScene" uid="uid://dlub4264qw8e0" path="res://levels/enemies/sugar/sugar.tscn" id="8_vllue"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dk8oo"]
 font_size = 32
@@ -50,6 +52,13 @@ size = Vector2(57.25, 2401)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_dk8oo")
+
+[node name="ChocolateParticles" parent="." instance=ExtResource("3_cw80v")]
+position = Vector2(1, -2277)
+
+[node name="Camera" parent="." node_paths=PackedStringArray("player_node") instance=ExtResource("6_ky5n2")]
+zoom = Vector2(3.5, 3.5)
+player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -146,17 +155,27 @@ shape = SubResource("RectangleShape2D_21l0h")
 [node name="Player" parent="." instance=ExtResource("4_3tdma")]
 position = Vector2(0, -55)
 scale = Vector2(0.3, 0.3)
-speed = 200.0
-jump_velocity = -700.0
 
 [node name="Platforms" type="Node2D" parent="."]
 
 [node name="EndScreen" parent="." instance=ExtResource("5_q0jyg")]
 
-[node name="Camera" parent="." node_paths=PackedStringArray("player_node") instance=ExtResource("6_ky5n2")]
-zoom = Vector2(3.5, 3.5)
-player_node = NodePath("../Player")
+[node name="Sugar" parent="." instance=ExtResource("8_vllue")]
+position = Vector2(841, -392)
+scale = Vector2(0.1, 0.1)
 
-[connection signal="body_entered" from="NextLevel" to="." method="_on_next_level_body_entered"]
-[connection signal="request_floor" from="Player" to="." method="_on_player_request_floor"]
+[node name="SugarLeft" parent="." instance=ExtResource("8_vllue")]
+position = Vector2(-823, -1864)
+scale = Vector2(0.1, 0.1)
+
+[connection signal="on_chocolate_hit_player" from="ChocolateParticles" to="." method="_on_chocolate_particles_on_chocolate_hit_player"]
 [connection signal="game_over" from="Camera" to="." method="_on_camera_game_over"]
+[connection signal="body_entered" from="NextLevel" to="." method="_on_next_level_body_entered"]
+[connection signal="hit_sugar" from="Player" to="." method="_on_player_hit_sugar"]
+[connection signal="player_start_jump" from="Player" to="." method="_on_player_player_start_jump"]
+[connection signal="request_floor" from="Player" to="." method="_on_player_request_floor"]
+[connection signal="try_again" from="EndScreen" to="." method="_on_end_screen_try_again"]
+[connection signal="sugar_defeat" from="Sugar" to="." method="_on_sugar_sugar_defeat"]
+[connection signal="sugar_gotch_player" from="Sugar" to="." method="_on_sugar_sugar_gotch_player"]
+[connection signal="sugar_defeat" from="SugarLeft" to="." method="_on_sugar_left_sugar_defeat"]
+[connection signal="sugar_gotch_player" from="SugarLeft" to="." method="_on_sugar_left_sugar_gotch_player"]

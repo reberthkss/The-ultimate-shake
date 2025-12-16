@@ -1,6 +1,11 @@
 extends Control
 
 
+func _ready():
+	return
+	$Settings.hide()
+	$Ranking.hide()
+
 func _on_play_button_pressed() -> void:
 	$ButtonsSound.play()
 	get_tree().change_scene_to_file("res://levels/0-200/Level_0_200.tscn")
